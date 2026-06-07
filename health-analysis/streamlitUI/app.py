@@ -369,13 +369,13 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
     st.markdown("**Report Date**")
-    report_date = st.date_input("", date.today(), label_visibility="collapsed")
+    report_date = st.date_input("Report Date", date.today(), label_visibility="collapsed")
 
     st.markdown("**Dietary Preference**")
-    diet_pref = st.selectbox("", ["No Restriction", "Vegetarian", "Vegan", "Diabetic-Friendly", "Low-Sodium", "Heart-Healthy"], label_visibility="collapsed")
+    diet_pref = st.selectbox("Dietary Preference", ["No Restriction", "Vegetarian", "Vegan", "Diabetic-Friendly", "Low-Sodium", "Heart-Healthy"], label_visibility="collapsed")
 
     st.markdown("**Allergies / Avoid**")
-    allergies = st.multiselect("", ["Dairy", "Gluten", "Nuts", "Seafood", "Eggs", "Soy"], label_visibility="collapsed")
+    allergies = st.multiselect("Allergies / Avoid", ["Dairy", "Gluten", "Nuts", "Seafood", "Eggs", "Soy"], label_visibility="collapsed")
 
 
 # ─── Hero Header ───────────────────────────────────────────────────────────────
@@ -407,13 +407,13 @@ with tab1:
 
     col1, col2, col3, col4 = st.columns(4)
     params = {
-        "Hemoglobin": {"default": 13.5, "min": 3.0, "max": 25.0, "unit": "g/dL",
+        "Hemoglobin": {"default": 13.5, "min": 3.0,  "max": 25.0,  "unit": "g/dL",
                        "normal_m": (13.5, 17.5), "normal_f": (12.0, 15.5)},
-        "WBC Count":  {"default": 7.5,  "min": 0.5, "max": 20.0, "unit": "×10³/µL",
+        "WBC Count":  {"default": 7.5,  "min": 0.5,  "max": 20.0,  "unit": "×10³/µL",
                        "normal_m": (4.5, 11.0), "normal_f": (4.5, 11.0)},
-        "Platelet":   {"default": 250,  "min": 50,  "max": 800,  "unit": "×10³/µL",
+        "Platelet":   {"default": 250.0,"min": 50.0, "max": 800.0, "unit": "×10³/µL",
                        "normal_m": (150, 400), "normal_f": (150, 400)},
-        "RBC":        {"default": 4.8,  "min": 1.0, "max": 8.0,  "unit": "×10⁶/µL",
+        "RBC":        {"default": 4.8,  "min": 1.0,  "max": 8.0,   "unit": "×10⁶/µL",
                        "normal_m": (4.7, 6.1), "normal_f": (4.2, 5.4)},
     }
 
@@ -421,7 +421,7 @@ with tab1:
     cols = [col1, col2, col3, col4]
     for i, (name, p) in enumerate(params.items()):
         with cols[i]:
-            val = st.number_input(f"{name} ({p['unit']})", p["min"], p["max"], p["default"], step=0.1, key=f"cbc_{name}")
+            val = st.number_input(f"{name} ({p['unit']})", float(p["min"]), float(p["max"]), float(p["default"]), step=0.1, key=f"cbc_{name}")
             values[name] = val
             lo, hi = p["normal_m"] if gender == "Male" else p["normal_f"]
             status = "Normal" if lo <= val <= hi else ("High" if val > hi else "Low")
@@ -432,10 +432,10 @@ with tab1:
 
     col5, col6, col7, col8 = st.columns(4)
     meta_params = {
-        "Glucose (FBS)":   {"default": 95,   "min": 40, "max": 500, "unit": "mg/dL", "lo": 70,  "hi": 100},
-        "HbA1c":           {"default": 5.4,  "min": 3,  "max": 15,  "unit": "%",     "lo": 4.0, "hi": 5.6},
-        "Creatinine":      {"default": 1.0,  "min": 0.1,"max": 15,  "unit": "mg/dL", "lo": 0.7, "hi": 1.3},
-        "Uric Acid":       {"default": 5.5,  "min": 1,  "max": 15,  "unit": "mg/dL", "lo": 3.5, "hi": 7.2},
+        "Glucose (FBS)":   {"default": 95.0,  "min": 40.0, "max": 500.0, "unit": "mg/dL", "lo": 70.0, "hi": 100.0},
+        "HbA1c":           {"default": 5.4,   "min": 3.0,  "max": 15.0,  "unit": "%",     "lo": 4.0,  "hi": 5.6},
+        "Creatinine":      {"default": 1.0,   "min": 0.1,  "max": 15.0,  "unit": "mg/dL", "lo": 0.7,  "hi": 1.3},
+        "Uric Acid":       {"default": 5.5,   "min": 1.0,  "max": 15.0,  "unit": "mg/dL", "lo": 3.5,  "hi": 7.2},
     }
 
     for i, (name, p) in enumerate(meta_params.items()):
@@ -450,10 +450,10 @@ with tab1:
 
     col9, col10, col11, col12 = st.columns(4)
     lipid_params = {
-        "Total Cholesterol": {"default": 185, "min": 50, "max": 500, "unit": "mg/dL", "lo": 0,   "hi": 200},
-        "LDL":               {"default": 110, "min": 10, "max": 300, "unit": "mg/dL", "lo": 0,   "hi": 130},
-        "HDL":               {"default": 52,  "min": 10, "max": 100, "unit": "mg/dL", "lo": 40,  "hi": 100},
-        "Triglycerides":     {"default": 140, "min": 30, "max": 1000,"unit": "mg/dL", "lo": 0,   "hi": 150},
+        "Total Cholesterol": {"default": 185.0, "min": 50.0, "max": 500.0,  "unit": "mg/dL", "lo": 0.0,  "hi": 200.0},
+        "LDL":               {"default": 110.0, "min": 10.0, "max": 300.0,  "unit": "mg/dL", "lo": 0.0,  "hi": 130.0},
+        "HDL":               {"default": 52.0,  "min": 10.0, "max": 100.0,  "unit": "mg/dL", "lo": 40.0, "hi": 100.0},
+        "Triglycerides":     {"default": 140.0, "min": 30.0, "max": 1000.0, "unit": "mg/dL", "lo": 0.0,  "hi": 150.0},
     }
 
     for i, (name, p) in enumerate(lipid_params.items()):
@@ -468,10 +468,10 @@ with tab1:
 
     col13, col14, col15, col16 = st.columns(4)
     liver_params = {
-        "ALT (SGPT)": {"default": 28,  "min": 1,  "max": 500,  "unit": "U/L", "lo": 7,  "hi": 56},
-        "AST (SGOT)": {"default": 25,  "min": 1,  "max": 500,  "unit": "U/L", "lo": 10, "hi": 40},
-        "TSH":        {"default": 2.5, "min": 0.01,"max": 50,  "unit": "µIU/mL","lo":0.4,"hi": 4.0},
-        "Vitamin D":  {"default": 28,  "min": 1,  "max": 150,  "unit": "ng/mL","lo": 30, "hi": 100},
+        "ALT (SGPT)": {"default": 28.0,  "min": 1.0,  "max": 500.0,  "unit": "U/L",     "lo": 7.0,  "hi": 56.0},
+        "AST (SGOT)": {"default": 25.0,  "min": 1.0,  "max": 500.0,  "unit": "U/L",     "lo": 10.0, "hi": 40.0},
+        "TSH":        {"default": 2.5,   "min": 0.01, "max": 50.0,   "unit": "µIU/mL",  "lo": 0.4,  "hi": 4.0},
+        "Vitamin D":  {"default": 28.0,  "min": 1.0,  "max": 150.0,  "unit": "ng/mL",   "lo": 30.0, "hi": 100.0},
     }
 
     for i, (name, p) in enumerate(liver_params.items()):
@@ -873,7 +873,7 @@ with tab4:
 
     uploaded_file = st.file_uploader(
         "Upload your blood report (PDF or image)",
-        type=["pdf", "png", "jpg", "jpeg"],
+        type=["pdf", "png", "jpg", "jpeg", "text"],
         help="Upload a scanned or digital copy of your blood report for auto-parsing."
     )
 
